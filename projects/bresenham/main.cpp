@@ -20,30 +20,27 @@ void printGrid() {
 }
 
 void draw(int x1, int y1, int x2, int y2) {
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int dxy1 = (dx >= dy) ? dy : dx;
-    int dxy2 = (dx >= dy) ? dx : dy;
-    int xy1 = (dx >= dy) ? x1 : y1; // Is difference x bigger than difference y?
-    int xy2 = (dx >= dy) ? x2 : y2; // Is difference y bigger than difference x?
-    int stepdirY = (y1 < y2) ? 1 : -1;
-    int y = (dx >= dy) ? y1 : x1;
+    int dx = x2-x1;
+    int dy = y2-y1;
+    int y = y1;
     int error = 0;
-
-    for (int x = xy1; x <= xy2; x++) {
-        cout << "(" << x << ", " << y << ")" << endl;
-        grid[x][y] = 1;
-        error += dxy1;
-        cout << error*2 << endl;
-        if (2*error >= dxy2) { //same as | error/dx >= 0.5 | error >= 0.5*dx | error >= dx*0.5 | error/0.5 >= dx | error*2 >= dx | NO FLOATING POINT 
-            y+=stepdirY;
-            error -= dxy2;
-            //cout << "UP: "<< error << endl;
+    
+    for (int x = x1; x < x2; x++) {
+        
+        if (error > dx) {
+            y++;
+            error -= dx;
+        } else {
+            error += dy*2;
         }
+        
+        cout << error << endl;
+        grid[x][y] = 1;
         
     }
     grid[x1][y1] = 2;
     grid[x2][y2] = 2;
+    
 }
 
 /*
@@ -56,7 +53,9 @@ Test 5: (0,5) → (5,0)   Negative slope, 6 points
 */
 
 int main () {
-    draw(0,0,5,10);
+    
+    draw(0,0,9,2);
+    
     printGrid();
     return 0;
 }

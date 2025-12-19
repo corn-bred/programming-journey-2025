@@ -40,3 +40,9 @@ Wow, I haven't updated this for a few days. I couldn't get the commit to work be
 - Made Bresenham algorithm work with slopes <= 1 & >= -1.
 - Negative values work, but it was mostly easy.
 - Tomorrow: ???
+
+# December 17
+
+I rewrote bresenham's algorithm, with this time knowing how it works. I never thought algebra would actually help me in coding, yet here we are.
+
+For tomorrow, I will try and make a naive version of it working for all sectors.

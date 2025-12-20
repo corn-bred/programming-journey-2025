@@ -46,3 +46,7 @@ Wow, I haven't updated this for a few days. I couldn't get the commit to work be
 I rewrote bresenham's algorithm, with this time knowing how it works. I never thought algebra would actually help me in coding, yet here we are.
 
 For tomorrow, I will try and make a naive version of it working for all sectors.
+
+# December 19
+
+I forgot to commit yesterday and I'm also one day off every commit. I guess I have to commit earlier than 9pm now. It works for slopes > 1 but not for negative numbers.

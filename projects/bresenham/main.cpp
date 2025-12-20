@@ -19,24 +19,63 @@ void printGrid() {
     }
 }
 
+
+
 void draw(int x1, int y1, int x2, int y2) {
     int dx = x2-x1;
     int dy = y2-y1;
-    int y = y1;
+    cout  << y2-y1 << endl;
+    bool mult = ( y2-y1 < 0 ) ? false : true;
+    cout << mult << endl;
     int error = 0;
     
-    for (int x = x1; x < x2; x++) {
-        
-        if (error > dx) {
-            y++;
-            error -= dx;
+    if (abs(dx) >= abs(dy)) {
+        if (mult) {
+            
+            int y = y1;
+            for (int x = x1; x < x2; x++) {
+                if (error > dx) {
+                    y++;
+                    error -= dx;
+                } else {
+                    error += (dy*2);
+                }
+                //cout << error << endl;
+                grid[x][y] = 1;
+
+            }
         } else {
-            error += dy*2;
+            int y = y2;
+        for (int x = x1; x > x2; x--) {
+            if (error < dx) {
+                y--;
+                error += dx;
+            } else {
+                error -= (dy*2);
+            }
+            cout << error << endl;
+            cout << "( " << x << ", " << y << " )" << endl;
+            grid[x][y] = 1;
+
+        }
         }
         
-        cout << error << endl;
-        grid[x][y] = 1;
         
+    } else {
+        int x = x1;
+        for (int y = y1; y < y2; y++) {
+        
+            if (error > abs(dy)) {
+                x += mult;
+                error -= dy * mult;
+            } else {
+                error += dx*2 * mult;
+            }
+
+            //cout << error << endl;
+            grid[x][y] = 1;
+
+        }
     }
     grid[x1][y1] = 2;
     grid[x2][y2] = 2;
@@ -54,7 +93,7 @@ Test 5: (0,5) → (5,0)   Negative slope, 6 points
 
 int main () {
     
-    draw(0,0,9,2);
+    draw(3,2,0,0);
     
     printGrid();
     return 0;

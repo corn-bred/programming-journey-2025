@@ -58,3 +58,6 @@ I made it work for all degrees. Later, I will try and make a rotating square or 
 # December 20 - UPDATE
 
 Okay, it's hard. Probably because of my trash math skills and whatsoever, but I'm going to save this for tomorrow. I'll probably try and rewrite the rotation matrix or create a new function for it. It doesn't seem like gitignore is not working, but I'm stupid, so I probably did something wrong.
+## Update 2
+
+Yeah, I did something wrong.

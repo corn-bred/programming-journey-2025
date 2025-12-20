@@ -50,3 +50,7 @@ For tomorrow, I will try and make a naive version of it working for all sectors.
 # December 19
 
 I forgot to commit yesterday and I'm also one day off every commit. I guess I have to commit earlier than 9pm now. It works for slopes > 1 but not for negative numbers.
+
+# December 20
+
+I made it work for all degrees. Later, I will try and make a rotating square or cube. Since I already know the matrix multiplications, I figure it probably wouldn't be that hard.

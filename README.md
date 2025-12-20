@@ -54,3 +54,7 @@ I forgot to commit yesterday and I'm also one day off every commit. I guess I ha
 # December 20
 
 I made it work for all degrees. Later, I will try and make a rotating square or cube. Since I already know the matrix multiplications, I figure it probably wouldn't be that hard.
+
+# December 20 - UPDATE
+
+Okay, it's hard. Probably because of my trash math skills and whatsoever, but I'm going to save this for tomorrow. I'll probably try and rewrite the rotation matrix or create a new function for it. It doesn't seem like gitignore is not working, but I'm stupid, so I probably did something wrong.

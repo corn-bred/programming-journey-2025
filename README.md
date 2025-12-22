@@ -61,3 +61,7 @@ Okay, it's hard. Probably because of my trash math skills and whatsoever, but I'
 ## Update 2
 
 Yeah, I did something wrong.
+
+# December 21
+
+Finally! There is now a rotating cube on the screen. Now that I look at the square, it doesn't seem symmetrical. I will try to fix this.

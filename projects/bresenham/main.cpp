@@ -1,16 +1,18 @@
 #include <iostream>
 #include <cmath>
 #include <Windows.h>
+#define WIDTH 75
+#define HEIGHT 50
 
 using namespace std;
 
 
 
-int grid[31][31] = {0};
+int grid[WIDTH][HEIGHT] = {0};
 
 void gridClear() {
-    for (int y = 0; y < 31; y++) {
-        for (int x = 0; x < 31; x++) {
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
             grid[x][y] = 0;
             
         }
@@ -26,8 +28,8 @@ void clear() {
 }
 
 void printGrid() {
-    for (int y = 0; y < 31; y++) {
-        for (int x = 0; x < 31; x++) {
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
             switch(grid[x][y]) {
                 case 0: cout << " "; break;
                 case 1: cout << "#"; break;
@@ -99,8 +101,10 @@ void drawLine(int x1, int y1, int x2, int y2) {
     
 }
 
-void drawLineCartesian(int x1, int y1, int x2, int y2,int xOrig, int yOrig) {
-    drawLine(x1+xOrig,(-y1)+yOrig,x2+xOrig,(-y2)+yOrig);
+void drawLineDetail(int x1, int y1, int x2, int y2, int multiplier, bool halveY) {
+    float tmp = (halveY == true) ? 2 : 1;
+    //cout << x1 << ' ' << y1 << endl;
+    drawLine((x1* multiplier+WIDTH/2) ,((-y1/tmp* multiplier)+HEIGHT/2 ),(x2 * multiplier+WIDTH/2),( (-y2/tmp * multiplier)+HEIGHT/2));
 }
 
 /*
@@ -113,32 +117,36 @@ Test 5: (0,5) → (5,0)   Negative slope, 6 points
 */
 
 int main () {
-    float x[2] = {0,1}, y[2] = {1,0}; //x and y axis manipulation for rotation
+    float i[2] = {1,0}, j[2] = {0,1}; //x and y axis manipulation for rotation
     
-
+    int square[4][2] = { // {x, y}
+        {10, 10}, 
+        {10, -10}, 
+        {-10, -10}, 
+        {-10, 10}
+    };
+    int line[2][2] = {
+        {0,10},
+        {-10,-10}
+    };
+int tmp, tmp2;
     for (float time = 0; time < 10; time+=0.2) {
         
-        x[0] = cos(float(time)); x[1] = -sin(float(time)); //for rX; {x,y}
-        y[0] = sin(float(time)); y[0] = cos(float(time)); //for rY; {x,y}
-        int square[4][2] = { // {x, y}
-            {10, 10}, 
-            {10, -10}, 
-            {-10, -10}, 
-            {-10, 10}
-        };
-        int line[2][2] = {
-            {10,10},
-            {-10,-10}
-        };
+        i[0] = cos(float(time)); i[1] = sin(float(time)); //for rX; {x,y}
+        j[0] = sin(float(time)); j[1] = (-cos(float(time))); //for rY; {x,y}
+        //tmp = cos(float(time))*10;
+        //tmp2 = sin(float(time))*10;
         gridClear();
-        for (int i = 0; i < 4; i++) {
+        for (int idx = 0; idx < 4; idx++) {
             //drawLine((x[0]*line[0][0] + x[1]*line[0][1]) +20,   (y[0]*line[0][0] + y[1]*line[0][1]) +20  ,   (x[0]*line[1][0] + x[1]*line[1][1]) +20  ,   (y[0]*line[1][0] + y[1]*line[1][1]) +20  );
-        
-            drawLineCartesian( (int) (cos(time)*square[i%4][0]) , (int) (-sin(time)*square[i%4][1]/2), (int) (sin(time)*square[(i+1)%4][0]) , (int) (cos(time)*square[(i+1)%4][1]/2), 20,20);
-        }
+            //drawLineDetail( (int) (x[0]*10), (int) (x[1]*0), 0,0);
+            drawLineDetail( (int) ( (i[0] * (float)(square[idx][0])) + (j[0]* (float)(square[idx][1])) ), (int) ( (i[1]* (float)(square[idx][0])) + (j[1]* (float)(square[idx][1])) ) , (int) ( (i[0] * (float)(square[(idx+1)%4][0])) + (j[0]* (float)(square[(idx+1)%4][1])) ), (int) ( (i[1]* (float)(square[(idx+1)%4][0])) + (j[1]* (float)(square[(idx+1)%4][1])) ),1,true);
+            //drawLineDetail( (int) (y[0]*10+x[0]*10), (int) (y[1]*10+x[1]*10), 0 , 0 );
+            //drawLineDetail( (int) (x[0]* line[0][0] + y[0]* line[1][0]) , (int) (x[1]*line[0][1]+y[1]*line[1][1]), (int) (0) , (int) (0));
+        } //if an axis is 0, it will not rasterize correctly :((((
     clear();
     printGrid();
-    Sleep(100);
+    Sleep(16);
 }
     return 0;
 }

@@ -1,10 +1,16 @@
 #include <iostream>
 #include <cmath>
 #include <Windows.h>
+#include <map>
 #define WIDTH 75
 #define HEIGHT 50
 
 using namespace std;
+
+class inputManager {
+    private:
+    map<string, bool> keyStates;
+};
 
 
 
@@ -140,10 +146,10 @@ int tmp, tmp2;
         for (int idx = 0; idx < 4; idx++) {
             //drawLine((x[0]*line[0][0] + x[1]*line[0][1]) +20,   (y[0]*line[0][0] + y[1]*line[0][1]) +20  ,   (x[0]*line[1][0] + x[1]*line[1][1]) +20  ,   (y[0]*line[1][0] + y[1]*line[1][1]) +20  );
             //drawLineDetail( (int) (x[0]*10), (int) (x[1]*0), 0,0);
-            drawLineDetail( (int) ( (i[0] * (float)(square[idx][0])) + (j[0]* (float)(square[idx][1])) ), (int) ( (i[1]* (float)(square[idx][0])) + (j[1]* (float)(square[idx][1])) ) , (int) ( (i[0] * (float)(square[(idx+1)%4][0])) + (j[0]* (float)(square[(idx+1)%4][1])) ), (int) ( (i[1]* (float)(square[(idx+1)%4][0])) + (j[1]* (float)(square[(idx+1)%4][1])) ),1,true);
+            drawLineDetail( (int) ( (i[0] * (float)(square[idx][0])) + (j[0]* (float)(square[idx][1])) ), (int) ( (i[1]* (float)(square[idx][0])) + (j[1]* (float)(square[idx][1])) ) , (int) ( (i[0] * (float)(square[(idx+1)%4][0])) + (j[0]* (float)(square[(idx+1)%4][1])) ), (int) ( (i[1]* (float)(square[(idx+1)%4][0])) + (j[1]* (float)(square[(idx+1)%4][1])) ),1,false);
             //drawLineDetail( (int) (y[0]*10+x[0]*10), (int) (y[1]*10+x[1]*10), 0 , 0 );
             //drawLineDetail( (int) (x[0]* line[0][0] + y[0]* line[1][0]) , (int) (x[1]*line[0][1]+y[1]*line[1][1]), (int) (0) , (int) (0));
-        } //if an axis is 0, it will not rasterize correctly :((((
+        }
     clear();
     printGrid();
     Sleep(16);

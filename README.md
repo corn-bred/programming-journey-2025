@@ -65,3 +65,20 @@ Yeah, I did something wrong.
 # December 21
 
 Finally! There is now a rotating cube on the screen. Now that I look at the square, it doesn't seem symmetrical. I will try to fix this.
+
+# December 24
+
+It's been 2 days, but I'm moving to SDL3. I am also reimplementing it again to drill the algorithm in my head. Also, it turns out the reason why the square didn't seem symmetrical was because I divided the values then turned the float into an integer, which messed up the values. I probably won't do that again.
+
+# December 25
+
+I have successfully imported the files into SDL2. I also created a class and header file for line handling. I don't know what I could do next. 
+My next choices that I would like to do:
+1. Raytracing
+2. Triangle filling (I should probably do this)
+3. OpenGL to Vulkan
+4. Physics Engine
+
+All of these are quite difficult but it seems kinda fun (not opengl though) So I'll probably learn how to fill out triangles.
+
+On a side note, I also need to finish my rig in Blender so I can animate easier.

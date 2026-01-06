@@ -87,3 +87,15 @@ I'm trying to get colour interpolation to work so I can use the colours to make 
 
 #### December 27
 Well... I kinda am getting sidetracked over me trying to learn XML and Lua for a niche rhythm game called NotITG. I know my friends are gonna see this and will say something like "of course you were" and stuff. To other people, you should really check it out, because in my opinion, it's really cool and barely anybody plays it for such a visually appealling game. Not in UI terms, but the levels itself.
+
+#### December 31
+
+Oh my god... I got even more sidetracked over studying raytracing and simple arduino. I gotta lock in on the triangle.
+
+#### January 2
+
+Wow, it seems I messed up the code. I need to rewrite the SDL3 pixel drawing. I will need to dig deeper on how my previous code worked.
+
+#### January 6
+
+It's been 4 days... and I still can't get this trangle rasterization to work. I'm still going to work on this, as I did for every single day... I guess I'll finally push this in probably more than a week.

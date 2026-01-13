@@ -99,3 +99,7 @@ Wow, it seems I messed up the code. I need to rewrite the SDL3 pixel drawing. I 
 #### January 6
 
 It's been 4 days... and I still can't get this trangle rasterization to work. I'm still going to work on this, as I did for every single day... I guess I'll finally push this in probably more than a week.
+
+#### January 12
+
+I've fixed it! It's been way too long and I basically failed on my discipline. I had forgotten an = sign for a loop and now it works. I forgot to account the fact that all the pixels that are going to make the line are in the bounding box's edge, which I forgot to tell the program to check as well. I can't believe a 2 week long bugtesting phase was because of this.

@@ -102,31 +102,37 @@ void LineManager::drawTriangleFilled(int triangleX[3], int triangleY[3]) {
         if (triangleY[i] > ymax) ymax = triangleY[i]; 
         if (triangleY[i] < ymin) ymin = triangleY[i]; 
     }
+    /*
     std::cout << xmin << std::endl;
     std::cout << xmax << std::endl;
     std::cout << ymin << std::endl;
-    std::cout << ymax << std::endl;
+    std::cout << ymax << std::endl;*/
     //int linemin = *std::min_element(triangleY, triangleY + n);
     //int linemax = *std::max_element(triangleY, triangleY + n);
     int linemin;
     int linemax;
-    for (int i = ymin; i < ymax; i++) {
+    for (int i = ymin; i <= ymax; i++) {
         linemin = 0;
         linemax = 0;
         std::vector<int> onlinebits;
-        for (int j = xmin; j < xmax; j++) {
-            if (pixels[i*HEIGHT+j] != 0xFF000000) {
-                //std::cout << j;
-                if (onlinebits.size() == 0) linemin = j;
+        for (int j = xmin; j <= xmax; j++) { // PLEASE TELL ME WHY THIS CODE DOESN'T WORK: for (int j = xmin; j < xmax; j++)
+            
+            //std::cout << pixels[i*WIDTH+j] << std::endl;
+            if (pixels[i*WIDTH+j] != 0xFF000000) {
+                //std::cout << "------------------------\n";
                 onlinebits.push_back(j);
                 
-                if (j > linemax) linemax = j; 
-                if (j < linemin) linemin = j; 
+                
+                
             }
+            
+            
         }
-        std::cout << linemin << '-' << linemax;
+        linemax = onlinebits.back();
+        linemin = onlinebits.front();
+        //std::cout << linemin << '-' << linemax;
         drawLine2D(linemin, i, linemax, i);
-        std::cout << "\n" << i << '\n';
+        //std::cout << "\n" << i << '\n';
     }
     
     /*std::vector<uint32_t> mask(WIDTH * HEIGHT);

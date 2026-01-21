@@ -3,9 +3,12 @@
 #include <cmath>
 #include <algorithm>
 
-void LineManager::setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {//bitshift oh no
+void LineManager::setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, std::vector<uint32_t> *input) {
+    //bitshift oh no
     if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) return; // to not core dump or somehitng
-    pixels[y * WIDTH + x] = (0xFF << 24) | (r << 16) | (g << 8) | b; // because
+    //input[y * WIDTH + x] = (0xFF << 24) | (r << 16) | (g << 8) | b; 
+    input->insert()
+    // because
     //00000000 00000000 00000000 00000000
     //alpha    red      green    blue
     //EXAMPLE
@@ -29,10 +32,8 @@ void LineManager::setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {//bit
 
 }
 
-LineManager::LineManager(int w, int h) {
+LineManager::LineManager(int w, int h) :WIDTH(w), HEIGHT(h){
     pixels.resize(w * h);
-    WIDTH = w;
-    HEIGHT = h;
 }//oh god what do i fricking put here
 
 void LineManager::drawLine2D(int x1, int y1, int x2, int y2)
@@ -49,7 +50,7 @@ void LineManager::drawLine2D(int x1, int y1, int x2, int y2)
 
         for (int y = y1; y != y2 + sy; y += sy)
         {
-            setPixel(x, y, 255, 255, 255);
+            setPixel(x, y, 255, 255, 255, &this->pixels);
 
             error += abs(dx);
 
@@ -67,7 +68,7 @@ void LineManager::drawLine2D(int x1, int y1, int x2, int y2)
 
         for (int x = x1; x != x2 + sx; x += sx)
         {
-            setPixel(x, y, 255, 255, 255);
+            setPixel(x, y, 255, 255, 255, &this->pixels);
 
             error += abs(dy);
 
@@ -80,9 +81,50 @@ void LineManager::drawLine2D(int x1, int y1, int x2, int y2)
     }
 }
 
-/*void LineManager::drawLine2DCartesian(float x1, float y1, float x2, float y2, int xorigin, int yorigin, int scale, void (*operation)(int x, int y, uint8_t r, uint8_t g, uint8_t b)) {
-    drawLine2D(x1 *scale +xorigin, -y1 *scale +yorigin, x2 *scale +xorigin, -y2 *scale +yorigin, operation);
-}*/
+void LineManager::drawLine2D(int x1, int y1, int x2, int y2, std::vector<uint32_t> *output)
+{
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = (x2 - x1 < 0) ? -1 : 1;
+    int sy = (y2 - y1 < 0) ? -1 : 1;
+    int error = 0;
+
+    if (dx < dy)
+    {
+        int x = x1;
+
+        for (int y = y1; y != y2 + sy; y += sy)
+        {
+            setPixel(x, y, 255, 255, 255, output);
+
+            error += abs(dx);
+
+            if (error * 2 >= abs(dy))
+            {
+                error -= abs(dy);
+                x += sx;
+            }
+        }
+    }
+    else
+    {
+
+        int y = y1;
+
+        for (int x = x1; x != x2 + sx; x += sx)
+        {
+            setPixel(x, y, 255, 255, 255, output);
+
+            error += abs(dy);
+
+            if (error * 2 >= abs(dx))
+            {
+                error -= abs(dx);
+                y += sy;
+            }
+        }
+    }
+}
 
 void LineManager::drawTriangleFilled(int triangleX[3], int triangleY[3]) {
     drawLine2D(triangleX[0], triangleY[0], triangleX[1], triangleY[1]);
@@ -102,24 +144,14 @@ void LineManager::drawTriangleFilled(int triangleX[3], int triangleY[3]) {
         if (triangleY[i] > ymax) ymax = triangleY[i]; 
         if (triangleY[i] < ymin) ymin = triangleY[i]; 
     }
-    /*
-    std::cout << xmin << std::endl;
-    std::cout << xmax << std::endl;
-    std::cout << ymin << std::endl;
-    std::cout << ymax << std::endl;*/
-    //int linemin = *std::min_element(triangleY, triangleY + n);
-    //int linemax = *std::max_element(triangleY, triangleY + n);
     int linemin;
     int linemax;
     for (int i = ymin; i <= ymax; i++) {
         linemin = 0;
         linemax = 0;
         std::vector<int> onlinebits;
-        for (int j = xmin; j <= xmax; j++) { // PLEASE TELL ME WHY THIS CODE DOESN'T WORK: for (int j = xmin; j < xmax; j++)
-            
-            //std::cout << pixels[i*WIDTH+j] << std::endl;
+        for (int j = xmin; j <= xmax; j++) {
             if (pixels[i*WIDTH+j] != 0xFF000000) {
-                //std::cout << "------------------------\n";
                 onlinebits.push_back(j);
                 
                 
@@ -130,63 +162,12 @@ void LineManager::drawTriangleFilled(int triangleX[3], int triangleY[3]) {
         }
         linemax = onlinebits.back();
         linemin = onlinebits.front();
-        //std::cout << linemin << '-' << linemax;
         drawLine2D(linemin, i, linemax, i);
-        //std::cout << "\n" << i << '\n';
     }
-    
-    /*std::vector<uint32_t> mask(WIDTH * HEIGHT);
-    int xmin = std::min(triangle);
-    drawLine2Dsimple(triangle[0], triangle[1], triangle[2], triangle[3], &mask, WIDTH, HEIGHT);
-    drawLine2Dsimple(triangle[2], triangle[3], triangle[4], triangle[5], &mask, WIDTH, HEIGHT);
-    drawLine2Dsimple(triangle[4], triangle[5], triangle[0], triangle[1], &mask, WIDTH, HEIGHT);*///i am gonna do the multiple triangles later
-
 }
+
+
 
 void LineManager::drawLine2DGradient(int x1, int y1, uint8_t a1, uint8_t r1, uint8_t g1, uint8_t b1, int x2, int y2, uint8_t a2, uint8_t r2, uint8_t g2, uint8_t b2, void (*operation)(int x, int y, uint8_t r, uint8_t g, uint8_t b)) {
 
 }
-
-/*void LineManager::drawLine2Dsimple(int x1, int y1, int x2, int y2, std::vector<uint32_t> *mask, int w, int h){
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int sx = (x2 - x1 < 0) ? -1 : 1;
-    int sy = (y2 - y1 < 0) ? -1 : 1;
-    int error = 0;
-
-    if (dx < dy)
-    {
-        int x = x1;
-
-        for (int y = y1; y != y2 + sy; y += sy)
-        {
-            mask[y * w + x] = 0xFFFFFFFF;
-
-            error += abs(dx);
-
-            if (error * 2 >= abs(dy))
-            {
-                error -= abs(dy);
-                x += sx;
-            }
-        }
-    }
-    else
-    {
-
-        int y = y1;
-
-        for (int x = x1; x != x2 + sx; x += sx)
-        {
-            operation(x, y, 255, 255, 255);
-
-            error += abs(dy);
-
-            if (error * 2 >= abs(dx))
-            {
-                error -= abs(dx);
-                y += sy;
-            }
-        }
-    }
-}*/

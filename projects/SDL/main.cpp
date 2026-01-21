@@ -34,8 +34,8 @@ int main() {
     };
 
     float time = 0;
-    int triangley[3] = {40, 80, 60};
-    int trianglex[3] = {100,100,50};
+    int triangley[3] = {static_cast<int>(HEIGHT*0.75), static_cast<int>(HEIGHT*0.75), static_cast<int>(HEIGHT*0.25)};
+    int trianglex[3] = {static_cast<int>(WIDTH*0.75), static_cast<int>(WIDTH*0.25), static_cast<int>(WIDTH*0.5)};
     
     while(running) {
         
@@ -45,6 +45,7 @@ int main() {
 
         i[0] = cos(float(time)); i[1] = sin(float(time)); //for rX; {x,y}
         j[0] = sin(float(time)); j[1] = (-cos(float(time))); //for rY; {x,y}
+        
         linemanager.drawTriangleFilled(trianglex, triangley);
         //linemanager.drawLine2D(100, 100, 200, 0, setPixel);
         //cout << sin(time)*2 << endl;

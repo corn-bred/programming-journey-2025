@@ -8,6 +8,7 @@ using namespace std;
 
 vector<int> findchanges(vector<int> values) {
     vector<int> changes;
+    if (values.size() == 1) { return changes;}
     for (int i = 0; i < values.size(); i++) {
         if (i != 0) {
             changes.push_back(values.at(i) - values.at(i-1));
@@ -17,55 +18,57 @@ vector<int> findchanges(vector<int> values) {
 }
 
 int findpattern(vector<int> changes) {
-    vector<vector<int>> chunks; // 0 = main chunk, >=1 = side chunks
-    int iteration = 0, chunknum = 0;
+    if (changes.size() == 0) return 0;
+    vector<int> mainchunk, sidechunk; // 0 = main chunk, >=1 = side chunks
+    int iteration = 0;
     
-    for (int i = 0; i < changes.size(); i++) {
+    mainchunk.push_back(changes.at(0));
+
+    for (int i = 1; i < changes.size(); i++) {
 
         //cout << "passed\n";
-        //cout << iteration << endl;
-        chunks.push_back({0});
-        cout << changes.at(i) << endl;
-        cout << (chunks.at(0)).at(0) << endl;
+        //cout << "mainchunk.size(): " << mainchunk.size() << endl;
 
-        if (changes.at(i) == (chunks.at(0)).at(iteration% (chunks.at(0)).size())) {
-            cout << "true\n";
-
-            chunknum = floor( iteration / (chunks.at(0)).size() ) + 1;
+        if (changes.at(i) == mainchunk.at(iteration % mainchunk.size())) {
+            //cout << "true\n";
 
             //chunknum++;
-            (chunks.at(chunknum)).push_back(changes.at(i));
+            sidechunk.push_back(changes.at(i));
 
             iteration++;
 
         } else {
             //cout << "false\n";
 
-            for (int k = chunknum; k > 0; k--) {
+                for (int j = 0; j < sidechunk.size(); j++) {
+                    //cout << "j: " << j << endl;
 
-                for (int j = 0; j < (chunks.at(i)).size(); j++) {
-
-                    (chunks.at(k - 1)).push_back( (chunks.at(k)).at(j) );// to collapse all child info to parent
+                    mainchunk.push_back( sidechunk.at(j) );// to collapse all child info to parent
                     
                 }
-                (chunks.at(k)).erase ( (chunks.at(k)).begin() );
-            } 
-            (chunks.at(0)).push_back(changes.at(i));
-            chunknum = 0;
+                //cout << "finished\n";
+                sidechunk.clear();
+            mainchunk.push_back(changes.at(i));
             //(chunks.at(chunknum)).push_back()
             iteration = 0;
             //
         }
     }
-    return ( (chunks.at(0)).size() ) - 1;
+    //if (mainchunk.size() == 1) return 0;
+    return ( mainchunk.size() );
 }
 
-vector<int> values;
+
 
 int main () {
     
     string input;
+    while(true) {
+        vector<int> values;
     getline(cin, input);
+    if (input == "0") {
+        break;
+    }
     stringstream ss(input);
 
     int num;
@@ -73,17 +76,10 @@ int main () {
     while (ss >> num) {
         values.push_back(num);
     }
-
+    values.erase(values.begin());
     vector<int> changes = findchanges(values);
-    
-    /*for (int i = changes; i > 0; i--) {
-                for (int j = 0; j < (chunks.at(i)).size(); j++) {
-                    (chunks.at(i - 1)).push_back( (chunks.at(i)).at(j) );
-                }
-            }*/
-    for (auto x : changes) {
-        cout << x << " ";
-    }
-    cout << endl << findpattern(changes);
+
+    cout << findpattern(changes) << endl;
+}
     return 0;
 }

@@ -108,6 +108,10 @@ I've fixed it! It's been way too long and I basically failed on my discipline. I
 
 I did a DMOJ today, and AC'd my first junior 4. I just want to try and complete CCC Juniors before Grade 9, so I can prepare for Senior. I've heard the difficulty gets harder and harder. It took around an hour to do my junior 4, so I guess practice is something I need to do more often. Also, I have a schedule now, so hopefully no more super long in-between logs. On a topic of my rasterizer, I'm trying to learn how to rasterize a gradient triangle, which is the next part of *Graphics Programming from Scratch*, by Gabriel Gambetta. 
 
-##### January 22
+#### January 22
 
 Ohhhh my god, I got absolutely demolished with vectors. I'm going to work on J4 2010 tomorrow. This should NOT have taken this long.
+
+#### January 23
+
+Got it done. I think I need to get better at my array and vector skills.

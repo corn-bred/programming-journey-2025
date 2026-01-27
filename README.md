@@ -115,3 +115,7 @@ Ohhhh my god, I got absolutely demolished with vectors. I'm going to work on J4 
 #### January 23
 
 Got it done. I think I need to get better at my array and vector skills.
+
+#### January 27
+
+Did an easy question today. Mainly had to focus on schoolwork this weekend.
